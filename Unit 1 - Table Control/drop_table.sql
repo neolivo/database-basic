@@ -1,0 +1,1 @@
+DROP TABLE table_from_dbeaver;
