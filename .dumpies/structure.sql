@@ -18,3 +18,15 @@ CREATE TABLE IF NOT EXISTS log_activity (
     CONSTRAINT fk_user_id FOREIGN KEY (user_id) 
     REFERENCES users(id) ON DELETE CASCADE
 )
+
+-- update v1.3
+CREATE TABLE IF NOT EXISTS support_tickets (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL, -- Tidak boleh NULL, harus terkait dengan pengguna
+    ticket_title VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    status ENUM('open', 'closed', 'pending') DEFAULT 'open',
+    created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_ticket_user_id FOREIGN KEY (user_id) 
+    REFERENCES users(id) ON DELETE CASCADE -- CASCADE agar tiket ikut terhapus jika user dihapus
+);

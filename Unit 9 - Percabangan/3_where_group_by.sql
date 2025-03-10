@@ -10,3 +10,17 @@ FROM log_activity
 WHERE user_id > 2 -- kondisional where
 AND created_at >= DATE_SUB(CURRENT_DATE, INTERVAL 30 DAY)
 GROUP BY user_id;
+
+-- update v1.3
+SELECT 
+    user_id,
+    COUNT(CASE WHEN status = 'open' THEN 1 END) as open_tickets,
+    COUNT(CASE WHEN status = 'closed' THEN 1 END) as closed_tickets,
+    COUNT(CASE WHEN status = 'pending' THEN 1 END) as pending_tickets
+FROM support_tickets
+WHERE created_at >= DATE_SUB(CURRENT_DATE, INTERVAL 30 DAY)
+GROUP BY user_id
+HAVING COUNT(CASE WHEN status = 'open' THEN 1 END) >= 1
+ORDER BY open_tickets DESC;
+-- menampilkan akumulasi tiket berdasarkan status
+-- user harus memiliki minimal 1 tiket yang masih open

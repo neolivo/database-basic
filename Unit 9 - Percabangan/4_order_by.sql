@@ -11,3 +11,16 @@ WHERE user_id > 2 -- kondisional where
 AND created_at >= DATE_SUB(CURRENT_DATE, INTERVAL 30 DAY)
 GROUP BY user_id ORDER BY user_id ASC; 
 -- Mengurutkan hasil berdasarkan user_id secara ascending
+
+-- update v1.3
+SELECT 
+    id, ticket_title, status, created_at,
+    CASE status
+        WHEN 'open' THEN 1
+        WHEN 'pending' THEN 2
+        WHEN 'closed' THEN 3
+    END as status_priority
+FROM support_tickets
+ORDER BY status_priority, created_at DESC;
+-- menampilkan tingkatan prioritas
+-- open = 1, pending = 2, closed = 3

@@ -10,3 +10,12 @@ ON users.id = log_activity.user_id -- keterkaitan
 GROUP BY users.name -- group berdasar nama user
 HAVING total_activities > 0; -- filter aktivitas > 0
 -- catatan : bisa ganti "0" dengan angka minimum
+
+-- update v1.3
+SELECT 
+    u.id AS user_id,
+    u.name,
+    st.ticket_title,
+    st.status
+FROM users u
+RIGHT JOIN support_tickets st ON u.id = st.user_id;
